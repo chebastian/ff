@@ -1,0 +1,8 @@
+<utils>
+	<brushes>
+		<brush name = "fillRect" icon = "./media/FillRect.png" keycode = "f"/> 
+		<brush name = "pen" icon = "./media/Brush.png" keycode = "a"/>
+		<brush name = "fill" icon = "./media/Bucket.png" keycode = "s"/>
+		<brush name = "solid" icon = "./media/solidBrush.png" keycode = "d"/> 
+	</brushes>
+</utils>

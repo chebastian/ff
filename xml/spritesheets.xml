@@ -1,0 +1,3 @@
+<sprites>
+	<sprite srcW = "32" srcH="32" frameOffsetX = "0" frameOffsetY = "0" file = "./media/rouge_tiles.png"/>
+</sprites>
