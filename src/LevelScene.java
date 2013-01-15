@@ -30,7 +30,7 @@ public class LevelScene {
 		for(Tile t : Doors){
 			int px = x + (t.x * mGame.TileWidth());
 			int py = y + (t.y * mGame.TileHeight());
-			int fff = 0;
+			int fff = 1;
 			g.drawRect(px,py,mGame.TileWidth(), mGame.TileHeight());
 		}
 		
