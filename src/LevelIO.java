@@ -29,6 +29,7 @@ public class LevelIO {
 	
 	TileEdit game;
 	TileMap mMap;
+	LevelScene mScene;
 	int layer_size, level_w, level_h;
 	String mColmapReminder;
 	String mWorkingDirectory;
@@ -42,7 +43,34 @@ public class LevelIO {
 		mWorkingDirectory = "";
 	}
 	
-	public void SaveLevelGrid(String name, String filename, LevelGrid grid)
+	public void SaveScene(String name, String filename, LevelScene scene) throws Exception
+	{
+		Document doc = CreateXMLDocument();
+		if(doc == null)
+			throw new Exception("could not create xmlfile");
+		
+		Element root = doc.createElement("scene");
+		Element gameObjs = doc.createElement("game_objects");
+		gameObjs = appendeGameObjectElement(doc, gameObjs, scene);
+		
+	}
+	
+	protected Element appendeGameObjectElement(Document doc, Element rootelem, LevelScene scene)
+	{
+		for(GameEntity t : scene.Doors)
+		{
+			Element elem = doc.createElement(t.getName());
+			Point p = t.getPosition();
+			elem.setAttribute("x", Integer.toString(p.x));
+			elem.setAttribute("y", Integer.toString(p.y));
+			elem.setAttribute("open", Boolean.toString(!t.isSolid()));
+			rootelem.appendChild(elem);
+		}
+		
+		return rootelem;
+	}
+	
+	public Document SaveLevelGrid(String name, String filename, LevelGrid grid)
 	{
 		
 		Document doc = null;
@@ -90,11 +118,20 @@ public class LevelIO {
 		
 		Element tilesheetelem = doc.createElement("tilemap");
 		tilesheetelem.setAttribute("file","none.atm");
+		
+		Element gameObjs = doc.createElement("game_objects");
+		Element doors = doc.createElement("doors");
+		doors = appendeGameObjectElement(doc, doors, mScene);
+		gameObjs.appendChild(doors);
+		
 		rootElement.appendChild(roomhead);
 		rootElement.appendChild(tilesheetelem);
+		rootElement.appendChild(gameObjs);
 		doc.appendChild(rootElement);
 		
 		SaveDocumentToXmlFile(filename + "\\" + name + "\\" + name + ".xml", doc);
+		
+		return doc;
 	}
 	
 	public void overWriteLevel(String name, String filename, LevelGrid grid)
@@ -149,6 +186,24 @@ public class LevelIO {
 		doc.appendChild(rootElement);
 		
 		SaveDocumentToXmlFile(filename + "\\" + name + "\\" + name + ".xml", doc);
+	}
+	
+	public Document CreateXMLDocument()
+	{
+		Document doc = null;
+		try
+		{
+			DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder domBuilder = domFactory.newDocumentBuilder();
+			doc = domBuilder.newDocument();
+		}
+		catch(Exception e)
+		{
+			System.out.print(e.getMessage());
+			return null;
+		}
+		
+		return doc;
 	}
 	
 	//Creates a new dir if no current exists
@@ -437,6 +492,11 @@ public class LevelIO {
 	final String GetWorkingDir()
 	{
 		return mWorkingDirectory;
+	}
+	
+	public void setScene(LevelScene scene)
+	{
+		mScene = scene;
 	}
 
 }

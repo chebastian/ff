@@ -54,7 +54,7 @@ public class FillBrush extends Brush {
 						//add tile to alter list
 						toAlter.add(currentTile);
 					}
-					//add this tile to checked list
+					//add this tile to checked liste
 					checkedList.add(currentTile);
 				}
 				

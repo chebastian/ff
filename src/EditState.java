@@ -497,6 +497,7 @@ public class EditState extends State implements ActionListener, MouseMotionListe
 			path += ".xml";
 		
 		LevelIO levelwriter = new LevelIO(mGame);
+		levelwriter.setScene(mScene);
 		levelwriter.SaveLevelGrid(fileChooser.getSelectedFile().getName(), fileChooser.getSelectedFile().getParentFile().getAbsolutePath(), mScene.RoomGrid);
 	}
 	
@@ -740,7 +741,9 @@ public class EditState extends State implements ActionListener, MouseMotionListe
 			{
 				mGame.getCamera().Translate(0, 	movespeed);
 			}
+			
 		}
+		
 	}
 	
 	public boolean MiniatureMapIsClicked(MouseEvent e)

@@ -24,6 +24,7 @@ public class Brush implements MouseMotionListener, MouseListener{
 	int ActiveValue;
 	boolean activated;
 	boolean PaintSolid;
+	boolean IgnoreLayer;
 	
 	protected String BrushName;
 	protected String BrushKeyCode;
@@ -38,6 +39,7 @@ public class Brush implements MouseMotionListener, MouseListener{
 		System.out.print("Added Mouse Listner");
 		BrushKeyCode = "A";
 		BrushName = "pen";
+		IgnoreLayer = false;
 	}
 	
 	public void CleanUp()
@@ -88,6 +90,11 @@ public class Brush implements MouseMotionListener, MouseListener{
 	
 	public void PaintTile(Point p)
 	{
+		if(IgnoreLayer)
+		{
+			LayeredTilemap m = (LayeredTilemap)(map);
+			m.SetTileValueOfAllLayers(p.x, p.y, ActiveValue);
+		}
 		map.SetTileValue(p.x, p.y, ActiveValue);
 		map.GetTile(p.x,p.y).solid = PaintSolid;
 	}

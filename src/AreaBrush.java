@@ -19,7 +19,9 @@ public class AreaBrush extends Brush {
 	
 	public void PaintTile(Point pos)
 	{
-		mScene.AddNewDoor(pos, mAreaName, PaintSolid);
+		GameEntity ent = new GameEntity("door", new Point(pos.x,pos.y));
+		ent.setSolid(PaintSolid);
+		mScene.AddNewDoor(ent,"door");
 	}
 
 }

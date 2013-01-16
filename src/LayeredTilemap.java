@@ -90,6 +90,22 @@ public class LayeredTilemap extends TileMap{
 		CurrentLayer().SetTileValue(x, y, val);
 	}
 	
+	public void SetTileValue(int x, int y, int layer,int val)
+	{
+		GetTilesFromLayer(layer).GetTile(x, y).TileID = val;
+	}
+	
+	public void SetTileValueOfAllLayers(int x, int y, int val)
+	{
+		if(true)
+		{
+			for(int i = 0; i < LayersSize(); i++)
+			{
+				SetTileValue(x, y, i, val);
+			}
+		}
+	}
+	
 	public void SetTileSolid(int x, int y, boolean val)
 	{
 		for(TileMap map : mLayers)
