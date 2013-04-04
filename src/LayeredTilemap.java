@@ -11,6 +11,7 @@ public class LayeredTilemap extends TileMap{
 	protected int mNumLayers;
 	protected String mName;
 	protected TileSheet mCurrentSheet;
+	protected boolean mIsLoadedFromFile;
 	
 	LayeredTilemap(int w, int h, int layers)
 	{
@@ -25,6 +26,7 @@ public class LayeredTilemap extends TileMap{
 		mName = "";
 		mCurrentLayer = 0;
 		mCurrentSheet = null;
+		mIsLoadedFromFile = false;
 	}
 	
 	public void AddNewLayer(TileMap map)
@@ -137,6 +139,16 @@ public class LayeredTilemap extends TileMap{
 	public String getName()
 	{
 		return mName;
+	}
+	
+	public boolean IsLoadedFromFile()
+	{
+		return mIsLoadedFromFile;
+	}
+	
+	public void SetLoadedFromFile(boolean status)
+	{
+		mIsLoadedFromFile = status;
 	}
 	
 	public TileMap GetTilesFromLayer(int layer)

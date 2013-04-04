@@ -59,6 +59,7 @@ public class LevelGrid {
 			SetRoomAsSelected(map);
 			return;
 		}
+		
 		JOptionPane pane = new JOptionPane();
 		if(map.getName() == "")
 		{

@@ -1,16 +1,13 @@
 import java.awt.Point;
 import java.io.File;
 import java.io.StringWriter;
-import java.security.spec.MGF1ParameterSpec;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.print.Doc;
-import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -43,15 +40,30 @@ public class LevelIO {
 		mWorkingDirectory = "";
 	}
 	
+	public boolean isPreviouslyLoaded(LevelScene scene)
+	{
+		return false;
+	}
+	
+	public boolean isOverwrite(LevelScene scene)
+	{
+		return false;
+	}
+	
 	public void SaveScene(String name, String filename, LevelScene scene) throws Exception
 	{
-		Document doc = CreateXMLDocument();
+		/*Document doc = CreateXMLDocument();
 		if(doc == null)
-			throw new Exception("could not create xmlfile");
+			throw new Exception("could not create xmlfile");*/
 		
-		Element root = doc.createElement("scene");
+		/*Element root = doc.createElement("scene");
 		Element gameObjs = doc.createElement("game_objects");
-		gameObjs = appendeGameObjectElement(doc, gameObjs, scene);
+		gameObjs = appendeGameObjectElement(doc, gameObjs, scene);*/
+		Document doc = SaveLevelGrid(name, filename, scene.RoomGrid);
+		Element sceneElem = doc.createElement("Scene");
+		sceneElem.appendChild(doc.getElementById("level"));
+		
+		SaveDocumentToXmlFile(filename + "\\" + name + "\\" + name + "X.xml", doc);
 		
 	}
 	

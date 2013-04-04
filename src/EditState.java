@@ -243,7 +243,7 @@ public class EditState extends State implements ActionListener, MouseMotionListe
 	{
 		mEditMenu = new JMenu("Edit Menu");
 		mGame.mMenuBar.add(mEditMenu);
-		JMenuItem item = new JMenuItem("Load Tiles");
+		JMenuItem item = new JMenuItem("Load Room");
 		item.addActionListener(new ActionListener() {
 			
 			@Override
@@ -258,7 +258,7 @@ public class EditState extends State implements ActionListener, MouseMotionListe
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				SaveLevel();
+				SaveRoom();
 				
 			}
 		});
@@ -274,7 +274,7 @@ public class EditState extends State implements ActionListener, MouseMotionListe
 		});
 		mEditMenu.add(item);
 		
-		AddMenuItem(mEditMenu,"Load Level", KeyStroke.getKeyStroke(KeyEvent.VK_R,ActionEvent.CTRL_MASK), new ActionListener() {
+		AddMenuItem(mEditMenu,"Load Map", KeyStroke.getKeyStroke(KeyEvent.VK_R,ActionEvent.CTRL_MASK), new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -381,7 +381,7 @@ public class EditState extends State implements ActionListener, MouseMotionListe
 		ViewMenu = new JMenu("View");
 		mGame.mMenuBar.add(ViewMenu);
 		
-		AddMenuItem(ViewMenu, "View Curor Outline", KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK), new ActionListener() {
+		AddMenuItem(ViewMenu, "View Cursor Outline", KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK), new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -465,12 +465,11 @@ public class EditState extends State implements ActionListener, MouseMotionListe
 		mGame.getCamera().CenterOn(mMap.PositionOffset);
 	}
 	
-	public void SaveLevel()
-	{
-		System.out.print("SAVED");
+	public void SaveRoom()
+	{	
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle("Save Room");
-		int stat = fileChooser.showSaveDialog(mGame.mFrame);
+		fileChooser.showSaveDialog(mGame.mFrame);
 		String path = new String();
 		
 		path = fileChooser.getSelectedFile().getAbsolutePath();
@@ -491,14 +490,20 @@ public class EditState extends State implements ActionListener, MouseMotionListe
 		int stat = fileChooser.showSaveDialog(mGame.mFrame);
 		String path = new String();
 		
-		path = fileChooser.getSelectedFile().getAbsolutePath();
-		
-		if(!path.endsWith(".xml"))
-			path += ".xml";
+		path = fileChooser.getSelectedFile().getParentFile().getAbsolutePath();
 		
 		LevelIO levelwriter = new LevelIO(mGame);
 		levelwriter.setScene(mScene);
-		levelwriter.SaveLevelGrid(fileChooser.getSelectedFile().getName(), fileChooser.getSelectedFile().getParentFile().getAbsolutePath(), mScene.RoomGrid);
+		//levelwriter.SaveLevelGrid(fileChooser.getSelectedFile().getName(), fileChooser.getSelectedFile().getParentFile().getAbsolutePath(), mScene.RoomGrid);
+		String name = fileChooser.getSelectedFile().getName();
+		try
+		{
+			levelwriter.SaveScene(name, path, mScene);	
+		}
+		catch(Exception e)
+		{
+			System.out.print(e.getMessage());
+		}
 	}
 	
 	public void LoadLevel()

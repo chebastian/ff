@@ -9,6 +9,7 @@ public class LevelScene {
 	TileEdit mGame;
 	LevelGrid RoomGrid;
 	LinkedList<GameEntity> Doors;
+	boolean mIsLoadedFromFile;
 	
 	public LevelScene(TileEdit game)
 	{
@@ -49,6 +50,16 @@ public class LevelScene {
 		}
 		
 		g.setColor(c);
+	}
+	
+	public void setLoadedFromFile(boolean status)
+	{
+		mIsLoadedFromFile = status;
+	}
+	
+	public boolean isLoadedFromFile()
+	{
+		return mIsLoadedFromFile;
 	}
 	
 	
