@@ -12,4 +12,13 @@ public class LevelRoom {
 		Map = map;
 		Entitys = new LinkedList<>();
 	}
+	
+	public void SetRoomName(String name)
+	{
+		Map.SetName(name);
+	}
+	public String RoomName()
+	{
+		return Map.getName();
+	}
 }

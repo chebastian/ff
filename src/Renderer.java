@@ -112,14 +112,14 @@ public class Renderer {
 	
 	public void RenderLevelGrid(Graphics2D g, int x, int y, float scale,LevelGrid grid)
 	{
-		Set<Entry<Point,LayeredTilemap>> sete = grid.GetRooms().entrySet();
+		Set<Entry<Point,LevelRoom>> sete = grid.GetRooms().entrySet();
 		Iterator it = sete.iterator();
 		
 		while(it.hasNext())
 		{
-			Entry<Point,LayeredTilemap> entry = (Entry) it.next();
+			Entry<Point,LevelRoom> entry = (Entry) it.next();
 			
-			LayeredTilemap map = entry.getValue();
+			LayeredTilemap map = entry.getValue().Map;
 			int mapscaledW = (int)((((map.Width())*mGame.TileWidth()))*mGame.getCamera().getZoom());
 			int mapscaledH = (int)((((map.Height())*mGame.TileHeight()))*mGame.getCamera().getZoom());
 			int offsetX = entry.getKey().x * mapscaledW;

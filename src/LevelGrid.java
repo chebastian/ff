@@ -14,14 +14,14 @@ import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 
 public class LevelGrid {
 	
-	Map<Point,LayeredTilemap> mGrid;
+	Map<Point,LevelRoom> mGrid;
 	Point mLastInsertedIndex;
 	Point mSelectedIndex;
 	TileEdit mGame;
 	
 	public LevelGrid(TileEdit game)
 	{
-		mGrid = new HashMap<Point,LayeredTilemap>();
+		mGrid = new HashMap<Point,LevelRoom>();
 		mLastInsertedIndex = new Point();
 		mGame = game;
 		mSelectedIndex = new Point();
@@ -36,16 +36,16 @@ public class LevelGrid {
 	
 	public void SetMapTileSize(int w, int h)
 	{
-		Set<Entry<Point,LayeredTilemap>> sete = mGrid.entrySet();
+		Set<Entry<Point,LevelRoom>> sete = mGrid.entrySet();
 		Iterator it = sete.iterator();
 		
 		while(it.hasNext())
 		{
-			Entry<Point,LayeredTilemap> entry = (Entry) it.next();
+			Entry<Point,LevelRoom> entry = (Entry) it.next();
 			
-			LayeredTilemap m = entry.getValue();
-			m.TileHeight = h;
-			m.TileWidth = w;
+			LevelRoom m = entry.getValue();
+			m.Map.TileHeight = h;
+			m.Map.TileWidth = w;
 			
 			//m.PositionOffset.x = m.TileWidth * entry.getKey().x;
 			//m.PositionOffset.y = m.TileWidth * entry.getKey().y;
@@ -74,7 +74,7 @@ public class LevelGrid {
 		}
 		map.SetMapOffset(new Point(p.x * map.MapWidthInPixels(), p.y * map.MapHeightInPixels()));
 		
-		mGrid.put(p, map);
+		mGrid.put(p, new LevelRoom(map));
 		System.out.print("SIIIZE : " + mGrid.size());
 		mLastInsertedIndex = p;
 		SetRoomAsSelected(map);
@@ -124,7 +124,7 @@ public class LevelGrid {
 			throw new Exception("Tried to get index out of bounds: " + p.toString());
 		}
 		
-		LayeredTilemap map = mGrid.get(p);
+		LayeredTilemap map = mGrid.get(p).Map;
 		
 		return map;
 	}
@@ -136,14 +136,14 @@ public class LevelGrid {
 	
 	public Point GetRoomIndex(LayeredTilemap map)
 	{
-		Set<Entry<Point,LayeredTilemap>> sete = mGrid.entrySet();
+		Set<Entry<Point,LevelRoom>> sete = mGrid.entrySet();
 		Iterator it = sete.iterator();
 		
 		while(it.hasNext())
 		{
-			Entry<Point,LayeredTilemap> entry = (Entry) it.next();
+			Entry<Point,LevelRoom> entry = (Entry) it.next();
 			
-			LayeredTilemap m = entry.getValue();
+			LayeredTilemap m = entry.getValue().Map;
 			if(m.equals(map))
 				return entry.getKey();
 		}
@@ -168,7 +168,7 @@ public class LevelGrid {
 	
 	public void ChangeRoomAtIndex(Point p, LayeredTilemap map)
 	{
-		mGrid.put(p, map);
+		mGrid.put(p, new LevelRoom(map));
 	}
 	
 	public final Point GetSelectedIndex()
@@ -203,15 +203,15 @@ public class LevelGrid {
 	
 	public Point GetGridSize()
 	{
-		Set<Entry<Point,LayeredTilemap>> sete = mGrid.entrySet();
+		Set<Entry<Point,LevelRoom>> sete = mGrid.entrySet();
 		Iterator it = sete.iterator();
 		Point index = new Point();
 		
 		while(it.hasNext())
 		{
-			Entry<Point,LayeredTilemap> entry = (Entry) it.next();
+			Entry<Point,LevelRoom> entry = (Entry) it.next();
 			
-			LayeredTilemap m = entry.getValue();
+			LayeredTilemap m = entry.getValue().Map;
 			Point newindex = GetRoomIndex(m);
 			
 			if(index.x < newindex.x && newindex.x > 0)
@@ -231,15 +231,15 @@ public class LevelGrid {
 	{
 		int indexX = 0;
 		
-		Set<Entry<Point,LayeredTilemap>> sete = mGrid.entrySet();
+		Set<Entry<Point,LevelRoom>> sete = mGrid.entrySet();
 		Iterator it = sete.iterator();
 		Point index = new Point();
 		
 		while(it.hasNext())
 		{
-			Entry<Point,LayeredTilemap> entry = (Entry) it.next();
+			Entry<Point,LevelRoom> entry = (Entry) it.next();
 			
-			LayeredTilemap m = entry.getValue();
+			LayeredTilemap m = entry.getValue().Map;
 			Point newindex = GetRoomIndex(m);
 			
 			if(index.x > newindex.x)
@@ -259,15 +259,15 @@ public class LevelGrid {
 	{
 		int indexX = 0;
 		
-		Set<Entry<Point,LayeredTilemap>> sete = mGrid.entrySet();
+		Set<Entry<Point,LevelRoom>> sete = mGrid.entrySet();
 		Iterator it = sete.iterator();
 		Point index = new Point();
 		
 		while(it.hasNext())
 		{
-			Entry<Point,LayeredTilemap> entry = (Entry) it.next();
+			Entry<Point,LevelRoom> entry = (Entry) it.next();
 			
-			LayeredTilemap m = entry.getValue();
+			LayeredTilemap m = entry.getValue().Map;
 			Point newindex = GetRoomIndex(m);
 			
 			if(index.x < newindex.x)
