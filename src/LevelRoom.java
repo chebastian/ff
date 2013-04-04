@@ -17,6 +17,7 @@ public class LevelRoom {
 	{
 		Map.SetName(name);
 	}
+	
 	public String RoomName()
 	{
 		return Map.getName();
